@@ -1,7 +1,8 @@
-package edu.project.authentication.service;
+package edu.project.authentication.service.impl;
 
 import edu.project.authentication.model.User;
 import edu.project.authentication.repository.UserRepository;
+import edu.project.authentication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
