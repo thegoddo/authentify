@@ -20,6 +20,7 @@ public class AuthService {
             this.jwtUtil = jwtUtil;
         }
 
+        // TODO: Create a LoginRequest class with email and password fields
         public String authenticateAndGenerateToken(LoginRequest request) throws AuthenticationException {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
