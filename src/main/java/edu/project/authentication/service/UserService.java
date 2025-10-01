@@ -4,5 +4,6 @@ import edu.project.authentication.model.User;
 
 public interface UserService {
 
-    public User registerUser(User user);
+    public User registerNewUser(User user);
+    public boolean verifyUserAccount(String token);
 }
