@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -33,7 +34,11 @@ public class User {
     @Column(nullable = false)
     private boolean accountNonLocked = true;
 
+    @Column(nullable = true)
     private String resetToken;
+
+    @Column(nullable = true)
+    private Date resetTokenExpiry;
 
     @Override
     public final boolean equals(Object o) {

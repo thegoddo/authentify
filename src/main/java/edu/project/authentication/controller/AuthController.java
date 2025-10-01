@@ -1,6 +1,7 @@
 package edu.project.authentication.controller;
 
 import edu.project.authentication.dto.LoginRequest;
+import edu.project.authentication.dto.ResetPasswordRequest;
 import edu.project.authentication.model.User;
 import edu.project.authentication.service.AuthService;
 import edu.project.authentication.service.UserService;
@@ -46,6 +47,28 @@ public class AuthController {
         } catch (Exception e) {
             // Detailed exception handling should be implemented here (e.g., specific 401 response)
             return ResponseEntity.status(401).body("Invalid credentials or account not verified.");
+        }
+    }
+
+    @PostMapping("/password-reset/request")
+    public ResponseEntity<String> requestPasswordReset(@RequestBody String email) {
+        // In a real app, you'd validate the email format here
+        String frontendBaseUrl = "http://localhost:3000"; // Get this from @Value or context
+        userService.createPasswordResetToken(email, frontendBaseUrl);
+
+        return ResponseEntity.ok("If a matching account was found, a password reset link has been sent.");
+    }
+
+    @PostMapping("/password-reset/confirm")
+    public ResponseEntity<String> confirmPasswordReset(@RequestBody ResetPasswordRequest request) {
+        // You should add validation for the new password strength here
+
+        boolean success = userService.resetPassword(request);
+
+        if (success) {
+            return ResponseEntity.ok("Password successfully reset! You can now log in.");
+        } else {
+            return ResponseEntity.badRequest().body("Password reset failed. Token is invalid or expired.");
         }
     }
 }
