@@ -20,10 +20,12 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final CustomUserDetailService userDetailService;
+    private final OAuth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
     @Autowired
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter, CustomUserDetailService userDetailService) {
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter, CustomUserDetailService userDetailService, OAuth2LoginSuccessHandler oauth2LoginSuccessHandler) {
         this.jwtAuthFilter = jwtAuthFilter;
+        this.oauth2LoginSuccessHandler = oauth2LoginSuccessHandler;
         this.userDetailService = userDetailService;
     }
 
@@ -48,6 +50,10 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
+                .oauth2Login( oauth2 -> oauth2
+                        .successHandler(oauth2LoginSuccessHandler)
+                        .failureUrl("/login?error=oauth_failed")
+                )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
