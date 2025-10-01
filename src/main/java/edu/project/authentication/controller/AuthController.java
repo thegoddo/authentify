@@ -1,5 +1,6 @@
 package edu.project.authentication.controller;
 
+import edu.project.authentication.dto.LoginRequest;
 import edu.project.authentication.model.User;
 import edu.project.authentication.service.AuthService;
 import edu.project.authentication.service.UserService;

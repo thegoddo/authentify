@@ -1,5 +1,6 @@
 package edu.project.authentication.service;
 
+import edu.project.authentication.dto.LoginRequest;
 import edu.project.authentication.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,13 +25,13 @@ public class AuthService {
         public String authenticateAndGenerateToken(LoginRequest request) throws AuthenticationException {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            request.email(),
-                            request.password()`
+                            request.getEmail(),
+                            request.getPassword()
                     )
             );
 
             if (authentication.isAuthenticated()) {
-                return jwtUtil.generateToken(request.email());
+                return jwtUtil.generateToken(request.getEmail());
             } else {
                 throw new RuntimeException("Authentication failed");
             }
